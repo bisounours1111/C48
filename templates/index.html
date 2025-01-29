@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des fichiers JSON - Lille Métropole</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+        .category {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+        .category-title {
+            font-weight: bold;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            display: block;
+            border-radius: 5px;
+            text-align: left;
+        }
+        .category-title:hover {
+            background-color: #0056b3;
+        }
+        .files {
+            display: none;
+            margin-top: 10px;
+            padding-left: 15px;
+        }
+        .file-item {
+            list-style: none;
+            padding: 5px;
+            border-bottom: 1px solid #ddd;
+        }
+        .file-item:last-child {
+            border-bottom: none;
+        }
+        .file-link {
+            text-decoration: none;
+            color: #333;
+        }
+        .file-link:hover {
+            color: #007BFF;
+        }
+    </style>
+    <script>
+        function toggleCategory(categoryId) {
+            let fileList = document.getElementById(categoryId);
+            if (fileList.style.display === "none") {
+                fileList.style.display = "block";
+            } else {
+                fileList.style.display = "none";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <h1>Liste des fichiers JSON par catégorie</h1>
+
+    {% for category, files in data.items() %}
+    <div class="category">
+        <span class="category-title" onclick="toggleCategory('files-{{ loop.index }}')">
+            📂 {{ category }} ({{ files|length }} fichiers)
+        </span>
+        <ul id="files-{{ loop.index }}" class="files">
+            {% for file in files %}
+            <li class="file-item">
+                📄 <a class="file-link" href="{{ base_url }}/{{ category }}/{{ file }}" target="_blank">{{ file }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endfor %}
+
+</body>
+</html>

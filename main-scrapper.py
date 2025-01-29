@@ -43,8 +43,6 @@ def main():
                 except Exception as e:
                     print(f'error {e} for {url["href"]}')
                     continue
-                    
-
 
 if __name__ == '__main__':
     main()
